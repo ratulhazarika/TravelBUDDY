@@ -18,6 +18,10 @@
 # Logs
 *.log
 
+# Local notes
+EXPLAIN_TO_HR_AND_HLD_LLD_QA.md
+PROJECT_STATE_AND_CHANGES.md
+
 # Local databases
 *.db
 *.db-shm
