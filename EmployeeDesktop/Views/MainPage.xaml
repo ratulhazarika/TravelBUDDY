@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page
+    x:Class="EmployeeDesktop.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:EmployeeDesktop.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Sidebar -->
+            <ColumnDefinition Width="260"/>
+            <!-- Main content -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left sidebar -->
+        <Grid Grid.Column="0" Background="#FFE8BBD0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Brand -->
+            <StackPanel Orientation="Horizontal" Spacing="8" Padding="20,24,20,12">
+                <Border Width="40" Height="40" CornerRadius="20" Background="#FFEC407A" VerticalAlignment="Center">
+                    <TextBlock Text="T" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               FontWeight="Bold" Foreground="White"/>
+                </Border>
+                <StackPanel>
+                    <TextBlock Text="Travel Buddy" FontWeight="SemiBold" Foreground="#880E4F"/>
+                    <TextBlock Text="Employee" FontSize="12" Foreground="#AD1457"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Nav -->
+            <StackPanel Grid.Row="1" Padding="12,16" Spacing="6">
+                <Button x:Name="DashboardNavButton"
+                        Content="Dashboard"
+                        Click="DashboardNavButton_Click"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,4"
+                        Padding="16,8"
+                        Background="#FFF8BBD0"
+                        BorderBrush="Transparent"
+                        HorizontalContentAlignment="Left"/>
+                <Button x:Name="ProfileNavButton"
+                        Content="Profile"
+                        Click="ProfileNavButton_Click"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,4"
+                        Padding="16,8"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        HorizontalContentAlignment="Left"/>
+                <Button x:Name="SettingsNavButton"
+                        Content="Settings"
+                        Click="SettingsNavButton_Click"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,4"
+                        Padding="16,8"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        HorizontalContentAlignment="Left"/>
+            </StackPanel>
+
+            <!-- Logout -->
+            <Button x:Name="LogoutButton"
+                    Grid.Row="2"
+                    Content="Logout"
+                    Click="LogoutButton_Click"
+                    HorizontalAlignment="Stretch"
+                    Margin="16,0,16,16"
+                    Padding="16,8"
+                    Background="#FFD32F2F"
+                    Foreground="White"
+                    BorderBrush="Transparent"/>
+        </Grid>
+
+        <!-- Main area -->
+        <Grid Grid.Column="1" Padding="24" RowDefinitions="Auto,*" RowSpacing="16">
+            <!-- Header -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <TextBlock x:Name="WelcomeText"
+                               Text="Welcome!"
+                               FontSize="24"
+                               FontWeight="Bold"/>
+                    <TextBlock x:Name="StatusText"
+                               Text="You are logged in."
+                               FontSize="14"
+                               Foreground="#666"/>
+                </StackPanel>
+
+                <Button x:Name="GoOfflineButton"
+                        Grid.Column="1"
+                        Content="GO OFFLINE"
+                        Click="GoOfflineButton_Click"
+                        Background="#FFD32F2F"
+                        Foreground="White"
+                        Padding="20,8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Content views -->
+            <Grid Grid.Row="1">
+                <!-- Dashboard view -->
+                <Grid x:Name="DashboardView" RowDefinitions="Auto,*" RowSpacing="16">
+                    <!-- Summary row -->
+                    <Grid ColumnDefinitions="2*,2*,2*" ColumnSpacing="16">
+                        <!-- First/Last login + totals -->
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Today's Activity" FontWeight="SemiBold" Foreground="#333"/>
+                                <TextBlock>
+                                    <Run Text="First login: "/>
+                                    <Run x:Name="FirstLoginText" Text="N/A" FontWeight="SemiBold"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Last login/status: "/>
+                                    <Run x:Name="LastLogoutText" Text="N/A" FontWeight="SemiBold"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Total worked: "/>
+                                    <Run x:Name="TotalWorkText" Text="0h 0m" FontWeight="SemiBold"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Total break: "/>
+                                    <Run x:Name="TotalBreakText" Text="0h 0m" FontWeight="SemiBold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Productivity -->
+                        <Border Grid.Column="1" Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="PRODUCTIVITY" FontWeight="SemiBold" Foreground="#333" HorizontalAlignment="Center"/>
+                                <Grid Width="90" Height="90" Margin="0,4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Ellipse Stroke="#FF81C784" StrokeThickness="10"/>
+                                    <TextBlock x:Name="ProductivityText"
+                                               Text="0%"
+                                               FontSize="20"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Grid>
+                                <TextBlock x:Name="ProductivityMessageText"
+                                           Text="Let's get started"
+                                           FontSize="12"
+                                           Foreground="#666"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Shift overview -->
+                        <Border Grid.Column="2" Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Shift Overview" FontWeight="SemiBold" Foreground="#333"/>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock>
+                                        <Run Text="Start: "/>
+                                        <Run x:Name="ShiftStartText" Text="09:30 AM" FontWeight="SemiBold"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <Run Text="End: "/>
+                                        <Run x:Name="ShiftEndText" Text="--" FontWeight="SemiBold"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Shift done" FontSize="12" Foreground="#666"/>
+                                    <ProgressBar x:Name="ShiftProgressBar" Minimum="0" Maximum="100" Value="0" Height="6"/>
+                                    <TextBlock x:Name="ShiftDoneText" Text="0%" FontSize="12"/>
+                                </StackPanel>
+                                <TextBlock>
+                                    <Run Text="Time left: "/>
+                                    <Run x:Name="ShiftRemainingText" Text="N/A" FontWeight="SemiBold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Timeline + compact profile -->
+                    <Grid Grid.Row="1" ColumnDefinitions="2*,3*" ColumnSpacing="16">
+                        <!-- Compact profile -->
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Your Profile" FontSize="18" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="ProfileNameText"
+                                           Text="Employee Name"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock x:Name="ProfileRoleText"
+                                           Text="Role"
+                                           FontSize="14"
+                                           Foreground="#666"/>
+
+                                <StackPanel Margin="0,8,0,0">
+                                    <TextBlock>
+                                        <Run Text="Staff ID: "/>
+                                        <Run x:Name="ProfileStaffIdText" Text="-" FontWeight="SemiBold"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <Run Text="Email: "/>
+                                        <Run x:Name="ProfileEmailText" Text="-"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <Run Text="Phone: "/>
+                                        <Run x:Name="ProfilePhoneText" Text="-"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,10,0,0">
+                                    <Border Background="#E3F2FD" Padding="8,4" CornerRadius="6">
+                                        <TextBlock>
+                                            <Run Text="Status: "/>
+                                            <Run x:Name="ProfileStatusText" Text="Offline" FontWeight="SemiBold"/>
+                                        </TextBlock>
+                                    </Border>
+                                    <Border Background="#E8F5E9" Padding="8,4" CornerRadius="6">
+                                        <TextBlock>
+                                            <Run Text="Type: "/>
+                                            <Run x:Name="ProfileTypeText" Text="Full-Time"/>
+                                        </TextBlock>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Timeline -->
+                        <Border Grid.Column="1" Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Today's Activity Timeline"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"/>
+                                <ListView x:Name="TimeLogList">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:EmployeeTimeLogItem">
+                                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                                <TextBlock Text="{x:Bind TimeFormatted}" Width="60" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{x:Bind Label}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+                <!-- Profile view -->
+                <ScrollViewer x:Name="ProfileView" Visibility="Collapsed">
+                    <StackPanel Spacing="16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
+                                <TextBlock Text="Profile" FontSize="20" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="ProfileHeaderNameText" Text="Employee Name" Foreground="#666"/>
+                            </StackPanel>
+                            <Button x:Name="ChangePasswordButton"
+                                    Grid.Column="1"
+                                    Content="Change Password"
+                                    Click="ChangePasswordButton_Click"
+                                    Background="#FF6A1B9A"
+                                    Foreground="White"
+                                    Padding="16,8"/>
+                        </Grid>
+
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Personal Information" FontWeight="SemiBold"/>
+
+                                <Grid ColumnDefinitions="*,*"
+                                      RowDefinitions="Auto,Auto,Auto,Auto"
+                                      RowSpacing="6" ColumnSpacing="12">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Full Name"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="EditNameBox"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Email"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="EditEmailBox"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="EditPhoneBox"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Date of Birth"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="EditDobBox"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Professional Information" FontWeight="SemiBold"/>
+
+                                <Grid ColumnDefinitions="*,*"
+                                      RowDefinitions="Auto,Auto,Auto"
+                                      RowSpacing="6" ColumnSpacing="12">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Staff ID"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="EditStaffIdBox" IsReadOnly="True"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Role"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="EditRoleBox"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Date of Joining"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="EditDojBox"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="8">
+                                <TextBlock x:Name="ProfileErrorText" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
+                                <Button Content="Save Profile"
+                                        Click="SaveProfileButton_Click"
+                                        HorizontalAlignment="Right"
+                                        Padding="20,8"
+                                        Background="#FF2E7D32"
+                                        Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Change password section -->
+                        <Border Background="White" CornerRadius="10" Padding="16">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Change Password" FontWeight="SemiBold"/>
+                                <PasswordBox x:Name="OldPasswordBox" Header="Current password"/>
+                                <PasswordBox x:Name="NewPasswordBox" Header="New password"/>
+                                <PasswordBox x:Name="ConfirmPasswordBox" Header="Confirm new password"/>
+                                <TextBlock x:Name="PasswordErrorText" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
+                                <Button Content="Update Password"
+                                        Click="UpdatePasswordButton_Click"
+                                        HorizontalAlignment="Right"
+                                        Padding="20,8"
+                                        Background="#FF6A1B9A"
+                                        Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

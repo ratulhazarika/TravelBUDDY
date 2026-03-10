@@ -1,0 +1,26 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="EmployeeDesktop/EmployeeDesktop.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Build Solution="Debug|x64" Project="false" />
+    <Deploy Solution="*|ARM64" />
+    <Deploy Solution="*|x86" />
+    <Deploy Solution="Release|x64" />
+  </Project>
+  <Project Path="EmployeeWeb.Api/EmployeeWeb.Api.csproj" />
+  <Project Path="EmployeeWeb.Desktop (Package)/EmployeeWeb.Desktop (Package).wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
+    <Build Solution="Debug|x64" Project="false" />
+  </Project>
+  <Project Path="EmployeeWeb.Desktop/EmployeeWeb.Desktop.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
+</Solution>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page
+    x:Class="EmployeeDesktop.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <LinearGradientBrush x:Key="LoginGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4f46e5" Offset="0"/>
+            <GradientStop Color="#5b4ff5" Offset="0.4"/>
+            <GradientStop Color="#6c5ffc" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource LoginGradient}">
+        <ScrollViewer VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400">
+            <StackPanel Padding="32" Spacing="20">
+                <TextBlock Text="Employee Login" FontSize="24" FontWeight="Bold"
+                           Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock Text="Sign in to your account."
+                           Foreground="#E0E0E0" FontSize="14" HorizontalAlignment="Center"/>
+
+                <Border Background="#D9FFFFFF" CornerRadius="12" Padding="24" Margin="0,16,0,0">
+                    <StackPanel Spacing="16">
+                        <TextBox x:Name="EmailBox" Header="Email" PlaceholderText="your@email.com"
+                                 InputScope="EmailSmtpAddress"/>
+                        <PasswordBox x:Name="PasswordBox" Header="Password" PlaceholderText="Password"/>
+
+                        <TextBlock x:Name="ErrorText" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <Button x:Name="LoginButton" Content="Sign In" Click="LoginButton_Click"
+                                HorizontalAlignment="Stretch" Padding="0,14" FontWeight="SemiBold"/>
+
+                        <HyperlinkButton Content="Don't have an account? Sign up"
+                                         Click="SignupLink_Click" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <ProgressRing x:Name="ProgressRing" IsActive="False" Visibility="Collapsed"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Page>

@@ -1,0 +1,23 @@
+# Build output
+**/bin/
+**/obj/
+**/out/
+**/AppPackages/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.slnLaunch.user
+
+# NuGet
+**/packages/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

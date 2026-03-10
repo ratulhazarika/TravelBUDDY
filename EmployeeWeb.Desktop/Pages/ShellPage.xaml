@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EmployeeWeb.Desktop.Pages.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- AppBar: #273449, 64px (matches React) -->
+        <Grid Grid.Row="0" Background="#273449" Padding="16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>   
+
+            <!-- Logo + TRAVELOGY + Role -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                <!-- Logo -->
+                <SymbolIcon Symbol="Contact" Foreground="White" Width="28" Height="28"/>
+
+                <TextBlock Text="TRAVELOGY ONLINE PVT. LTD." Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <Rectangle Width="1" Fill="#4DFFFFFF" VerticalAlignment="Stretch" Margin="8,0"/>
+                <TextBlock x:Name="RoleText" Text="" Foreground="#BBBBBB" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Search Employee (AutoSuggestBox) -->
+            <AutoSuggestBox x:Name="EmployeeSearchBox" Grid.Column="1" Width="240" PlaceholderText="Search Employee..."
+                            Margin="24,0" VerticalAlignment="Center" QueryIcon="Find"
+                            TextMemberPath="StaffName"
+                            TextChanged="EmployeeSearchBox_TextChanged" SuggestionChosen="EmployeeSearchBox_SuggestionChosen"
+                            QuerySubmitted="EmployeeSearchBox_QuerySubmitted"/>
+
+            <!-- Welcome, {name} + Avatar -->
+            <Button Grid.Column="2" x:Name="WelcomeButton" Click="WelcomeButton_Click"
+                    Background="#4E5A6C" Padding="12,4" CornerRadius="20" VerticalAlignment="Center"
+                    Margin="0,0,8,0">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PersonPicture x:Name="UserPicture" Width="32" Height="32" DisplayName="User"/>
+                    <TextBlock x:Name="WelcomeText" Text="Welcome, " Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Settings flyout with Logout -->
+            <Button Grid.Column="3" Click="SettingsButton_Click" Background="Transparent" Foreground="#BBBBBB">
+                <!-- Settings -->
+                <SymbolIcon Symbol="Setting" Foreground="#BBBBBB" Width="20" Height="20"/>
+            </Button>
+        </Grid>
+
+        <!-- Content area: drawer (240) + main -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Drawer: #f4f6f8 (matches React) -->
+            <Border Grid.Column="0" Background="#F4F6F8" BorderBrush="#E0E0E0" BorderThickness="0,0,1,0">
+                <ListView x:Name="NavMenu" SelectionMode="Single" Margin="8,16,8,8"
+                          SelectionChanged="NavMenu_SelectionChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="12,10"/>
+                            <Setter Property="Margin" Value="4,2"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Border>
+
+            <!-- Main content frame -->
+            <Frame x:Name="ContentFrame" Grid.Column="1" Margin="24"/>
+        </Grid>
+    </Grid>
+</Page>

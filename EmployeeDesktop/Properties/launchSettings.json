@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EmployeeDesktop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EmployeeDesktop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
